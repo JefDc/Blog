@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Article;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Article;
 use Symfony\Component\HttpFoundation\Response;
 
 class BlogController extends AbstractController
@@ -114,8 +114,28 @@ class BlogController extends AbstractController
             'blog/category.html.twig',
             [
                 'category' => $category,
-                'articles' => $article,
+                'articles' => $article
             ]
         );
     }
+
+    /**
+     *
+     * @param Category $category
+     * @Route("category/{name}/all", name="Blog_show_all_category" ).
+     * @return Response A response instance
+     *
+     */
+    public function showAllByCategory(Category $category) : Response
+    {
+        $categories = $category->getArticles();
+
+        return $this->render(
+            'blog/categoryAll.html.twig',
+        [
+            'categories' => $categories
+        ]
+        );
+    }
+
 }
