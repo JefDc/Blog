@@ -3,6 +3,15 @@
 
 {% block body %}
 
-    <h1>{{ dump(category) }}</h1>
+<div class="main-content">
+
+    {% for category in categories %}
+    <p>{{ category.name }}</p>
+    {% endfor %}
+
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
 
 {% endblock %}

@@ -7,6 +7,9 @@ use App\Entity\Article;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use App\Form\ArticleSearchType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\FormView;
 
 class BlogController extends AbstractController
 {
@@ -18,7 +21,7 @@ class BlogController extends AbstractController
      * @Route("/", name="blog_index")
      * @return Response A response instance
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
         $articles = $this->getDoctrine()
             ->getRepository(Article::class)
@@ -30,9 +33,18 @@ class BlogController extends AbstractController
             );
         }
 
+        $form = $this->createForm(ArticleSearchType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $data = $form->getData();
+        }
         return $this->render(
             'blog/index.html.twig',
-            ['articles' => $articles]
+            [
+                'articles' => $articles,
+                'form' => $form->createView(),
+            ]
         );
     }
 
@@ -41,7 +53,7 @@ class BlogController extends AbstractController
      *
      * @param string $slug The slugger
      *
-     * @Route("/{slug<^[a-z0-9-]+$>}",
+     * @Route("/blog/{slug<^[a-z0-9-]+$>}",
      *     defaults={"slug" = null},
      *     name="blog_show")
      * @return Response A response instance
