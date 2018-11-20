@@ -29,7 +29,6 @@ class CategoryController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($addCategory);
             $em->flush();
-            header('location: index.html.twig');
 
             return $this->redirectToRoute('category');
         }
