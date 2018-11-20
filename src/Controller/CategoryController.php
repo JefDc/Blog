@@ -30,6 +30,8 @@ class CategoryController extends AbstractController
             $em->persist($addCategory);
             $em->flush();
             header('location: index.html.twig');
+
+            return $this->redirectToRoute('category');
         }
 
         return $this->render('category/index.html.twig', [
