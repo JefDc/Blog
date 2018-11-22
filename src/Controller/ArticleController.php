@@ -3,32 +3,52 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Form\ArticleType;
+use App\Entity\Category;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Flex\Response;
 
 class ArticleController extends AbstractController
 {
     /**
-     * @Route("/article", name="article")
+     * @Route("/article", name="article_list")
+     * Param $request
      */
-    public function index()
-    {
-        return $this->render('article/index.html.twig', [
-            'controller_name' => 'ArticleController',
-        ]);
-    }
-    /**
-     * @Route("/category", name="category")
-     */
-    public function showCategory($id)
+    public function index(Request $request)
     {
         $articles = $this->getDoctrine()
             ->getRepository(Article::class)
-            ->find($id);
-        $categoryName = $articles->getCategory()->getname();
-        $this->render('category/index.html.twig', [
-            'articles' => $categoryName,
+            ->findAll();
+
+        $article = new Article();
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $article = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($article);
+            $em->flush();
+
+            return $this->redirectToRoute('article_list');
+        }
+
+        return $this->render('article/index.html.twig', [
+            'articles' => $articles,
+            'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/article/{id}", name="article_show")
+     * Param $article
+     */
+    public function show(Article $article) :Response
+    {
+        return $this->render('blog/article.html.twig', ['article'=>$article]);
     }
 
 

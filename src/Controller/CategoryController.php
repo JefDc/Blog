@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\CategoryType;
@@ -12,6 +13,7 @@ class CategoryController extends AbstractController
 {
     /**
      * @Route("/category", name="category")
+     *
      */
     public function index(Request $request)
     {
@@ -39,5 +41,21 @@ class CategoryController extends AbstractController
             'categories' => $categories,
         ]);
     }
+
+    /**
+     * @Route("/category", name="category")
+     */
+    public function showCategory($id)
+    {
+        $articles = $this->getDoctrine()
+            ->getRepository(Article::class)
+            ->find($id);
+        $categoryName = $articles->getCategory()->getname();
+        $this->render('category/index.html.twig', [
+            'articles' => $categoryName,
+        ]);
+    }
+
+
 
 }
