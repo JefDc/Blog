@@ -13,8 +13,8 @@ use Symfony\Flex\Response;
 class ArticleController extends AbstractController
 {
     /**
-     * @Route("/article", name="article_list")
-     * Param $request
+     * @Route("/articles", name="article_list")
+     *
      */
     public function index(Request $request)
     {
