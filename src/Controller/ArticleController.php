@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Tag;
 use App\Form\ArticleType;
 use App\Entity\Category;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Flex\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 class ArticleController extends AbstractController
 {
@@ -46,10 +47,30 @@ class ArticleController extends AbstractController
      * @Route("/article/{id}", name="article_show")
      * Param $article
      */
-    public function show(Article $article) :Response
+    public function show(Article $article): Response
     {
-        return $this->render('blog/article.html.twig', ['article'=>$article]);
+        return $this->render('article/show.html.twig', [
+            'article' => $article
+        ]);
     }
 
 
+    /**
+     * @param Tag $tag
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/tag/{name}", name="tag")
+     */
+    public function showByTag(Tag $tag)
+    {
+
+        $tags = $tag->getArticles();
+
+
+        return $this->render("article/tag.html.twig",
+            [
+                'tags' => $tags
+            ]
+            );
+
+    }
 }

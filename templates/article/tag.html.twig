@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1> {{ tags.owner.name }}</h1>
+
+    {% for tag in tags %}
+
+        <h4><a href="{{ path('article_show', {'id': tag.id}) }}">{{ tag.title }}</a></h4>
+
+    {% endfor %}
+
+{% endblock %}

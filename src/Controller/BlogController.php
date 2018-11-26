@@ -73,6 +73,7 @@ class BlogController extends AbstractController
         $article = $this->getDoctrine()
             ->getRepository(Article::class)
             ->findOneBy(['title' => mb_strtolower($slug)]);
+        var_dump($slug);
 
         if (!$article) {
             throw $this->createNotFoundException(
