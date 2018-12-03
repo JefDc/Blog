@@ -58,7 +58,7 @@ class ArticleController extends AbstractController
     /**
      * @param Tag $tag
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/tag/{name}", name="tag")
+     * @Route("blog/tag/{name}", name="tag")
      */
     public function showByTag(Tag $tag)
     {
