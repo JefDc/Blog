@@ -2,12 +2,13 @@
 
 {% block body %}
 
-<h2>{{ categories.owner.name }}</h2>
+    <div class="container">
+    <h2 class="mt-5 mb-5">{{ categories.owner.name }}</h2>
 
 {% for article in categories %}
-    <p>{{ article.title }}</p>
-    <p>{{ article.content }}</p>
+    <p class="display-4">{{ article.title }}</p>
+    <p class="text-white mb-5">{{ article.content }}</p>
 
 {% endfor %}
-
+    </div>
 {% endblock %}

@@ -2,16 +2,22 @@
 
 {% block body %}
 
-    <h2>{{ article.title }}</h2>
-    <p>{{ article.content }}</p>
+    <div class="container">
+    <h2 class="mt-5 mb-5">{{ article.title }}</h2>
+    <p class="text-white">{{ article.content }}</p>
 
     <strong>Tags :</strong>
     <ul>
         {% for tag in article.tags %}
-            <a href="{{ path('tag', {'name' : tag.name}) }}"><li>{{ tag.name }}</li></a>
+            <a class="text-white" href="{{ path('tag', {'name' : tag.name}) }}"><li>{{ tag.name }}</li></a>
         {% else %}
             <li>No tags for this article</li>
         {% endfor %}
     </ul>
+        <a href="{{ path('article_list') }}">back to list</a>
 
+        <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
+
+        {{ include('article/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

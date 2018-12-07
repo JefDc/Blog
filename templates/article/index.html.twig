@@ -4,9 +4,10 @@
 
 {% block body %}
 
+    <div class="container">
     {% for article in articles %}
-        <h2>{{ article.title }}</h2>
-        <p>{{ article.content }}</p>
+        <h2 class="mt-5">{{ article.title }}</h2>
+        <a href="{{ path('article_show', {'id': article.id}) }}" class="text-white">{{ article.content }}</a>
         <p><span>Catégorie : </span>{{ article.category.name }}</p>
         <strong>Tags :</strong>
         <ul>
@@ -28,5 +29,5 @@
 
 
 
-
+    </div>
 {% endblock %}

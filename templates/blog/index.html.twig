@@ -9,13 +9,15 @@
     {#{{ form_row(form.searchField) }}#}
     {#<button type="submit" name="btnSearch">Rechercher</button>#}
     {#{{ form_end(form) }}#}
+    <div class="container">
 
-    <h1>All articles from article s table : </h1>
+    <h1 class="text-center mt-5">All articles from article s table : </h1>
 
     {% for article in articles %}
-        <div>
-            <h2>{{ loop.index }} / {{ article.title }} - Category : {{ article.category.name }}</h2>
-            <p>{{ article.content }}</p>
+        <div class="mt-5 mb-5">
+            <h2 class="">{#{{ loop.index }}#}  {{ article.title }}</h2>
+            <h4 class="text-white-50"> {{ article.category.name }}</h4>
+            <a href="{{ path('article_show', {'id': article.id}) }}" class="text-white">{{ article.content }}</a>
         </div>
     {% endfor %}
     <a href="{{ path('homepage') }}">
@@ -28,4 +30,5 @@
         Testing index() method from BlogController to view all articles.
     </a>
 
+    </div>
 {% endblock %}
